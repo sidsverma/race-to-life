@@ -20,6 +20,46 @@
             -webkit-user-select: text;
             user-select: text;
         }
+        /* New styles for concept section */
+        .concept {
+            background: rgba(15, 52, 96, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .concept h2 {
+            color: #e94560;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+        .concept p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        .concept .highlight {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .concept ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .concept li {
+            margin: 10px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        .concept li:before {
+            content: "•";
+            color: #e94560;
+            position: absolute;
+            left: 0;
+        }
     </style>
 </head>
 <body>
@@ -33,6 +73,19 @@
         <canvas id="gameCanvas"></canvas>
         <div class="menu" id="menu">
             <h1>Race to Life</h1>
+            <div class="concept">
+                <h2>The Journey of Life</h2>
+                <p>Welcome to <span class="highlight">Race to Life</span>, a unique game that simulates one of nature's most incredible journeys - the race to create new life!</p>
+                <p>In this game, you control a sperm cell on its epic journey to reach the egg. This represents the miraculous biological process where millions of sperm cells compete in a race against time and obstacles to fertilize the egg.</p>
+                <p>Your mission:</p>
+                <ul>
+                    <li>Navigate through challenging obstacles that represent the natural barriers in the reproductive system</li>
+                    <li>Race against other sperm cells in a competition for survival</li>
+                    <li>Collect energy boosts to maintain your speed and vitality</li>
+                    <li>Use power-ups to enhance your chances of success</li>
+                </ul>
+                <p>This game is inspired by the incredible biological process of fertilization, where only the strongest and most determined sperm cell reaches its goal. It's a celebration of life's beginnings!</p>
+            </div>
             <button id="startButton">Start Game</button>
             <div class="scoreboard">
                 <h2>High Scores</h2>
