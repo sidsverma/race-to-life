@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Race to Life</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="hud">
+            <div class="score">Energy: <span id="energy">100</span></div>
+            <div class="level">Level: <span id="level">1</span></div>
+            <div class="current-score">Score: <span id="currentScore">0</span></div>
+            <div class="high-score">High Score: <span id="highScore">0</span></div>
+        </div>
+        <canvas id="gameCanvas"></canvas>
+        <div class="menu" id="menu">
+            <h1>Race to Life</h1>
+            <button id="startButton">Start Game</button>
+            <div class="scoreboard">
+                <h2>High Scores</h2>
+                <div id="scoreList"></div>
+            </div>
+            <div class="instructions">
+                <h2>How to Play</h2>
+                <p>Guide your cell through challenging obstacles to reach the goal!</p>
+                <ul>
+                    <li>Use Arrow keys or WASD to move</li>
+                    <li>Avoid obstacles and other cells</li>
+                    <li>Collect energy boosts to maintain speed</li>
+                    <li>Reach the goal before your energy runs out</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="js/game.js"></script>
+</body>
+</html> 

@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #1a1a2e;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.game-container {
+    position: relative;
+    width: 800px;
+    height: 600px;
+    background: #16213e;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+#gameCanvas {
+    width: 100%;
+    height: 100%;
+    background: #0f3460;
+}
+
+.hud {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1;
+    display: flex;
+    gap: 20px;
+    font-size: 18px;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+.menu {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(22, 33, 62, 0.95);
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    min-width: 300px;
+}
+
+.menu h1 {
+    margin-bottom: 20px;
+    font-size: 32px;
+    color: #e94560;
+}
+
+.menu h2 {
+    margin: 20px 0 10px;
+    font-size: 24px;
+    color: #e94560;
+}
+
+.instructions {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.instructions ul {
+    list-style-position: inside;
+    margin-top: 10px;
+}
+
+.instructions li {
+    margin: 5px 0;
+}
+
+#startButton {
+    background: #e94560;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 18px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#startButton:hover {
+    background: #ff6b6b;
+}
+
+.scoreboard {
+    background: rgba(15, 52, 96, 0.5);
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px 0;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#scoreList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.score-entry {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    background: rgba(233, 69, 96, 0.2);
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.high-score {
+    color: #e94560;
+    font-weight: bold;
+}
+
+.current-score {
+    color: #4CAF50;
+    font-weight: bold;
+} 
