@@ -10,12 +10,11 @@ class Game {
             this.levelDisplay = document.getElementById('level');
             this.highScoreDisplay = document.getElementById('highScore');
             this.currentScoreDisplay = document.getElementById('currentScore');
-            this.scoreList = document.getElementById('scoreList');
 
             // Verify all required elements are present
             if (!this.canvas || !this.ctx || !this.menu || !this.startButton || 
                 !this.energyDisplay || !this.levelDisplay || !this.highScoreDisplay || 
-                !this.currentScoreDisplay || !this.scoreList) {
+                !this.currentScoreDisplay) {
                 throw new Error('Required DOM elements not found');
             }
 
@@ -129,7 +128,7 @@ class Game {
     startGame() {
         try {
             this.isRunning = true;
-            this.menu.style.display = 'none';
+            document.querySelector('.game-container').classList.add('game-active');
             this.gameLoop();
         } catch (error) {
             console.error('Error starting game:', error);
@@ -521,9 +520,12 @@ class Game {
 
     loseGame(reason) {
         this.isRunning = false;
-        this.addScore(this.currentScore);
-        alert(`Game Over! ${reason}\nFinal Score: ${this.currentScore}`);
-        this.menu.style.display = 'block';
+        const finalScore = this.currentScore;
+        if (finalScore > 0) {
+            this.addScore(finalScore);
+        }
+        alert(`Game Over! ${reason}\nFinal Score: ${finalScore}`);
+        document.querySelector('.game-container').classList.remove('game-active');
         this.resetGame();
     }
 
@@ -531,7 +533,6 @@ class Game {
         this.energy = 100;
         this.level = 1;
         this.currentScore = 0;
-        this.currentScoreDisplay.textContent = '0';
         this.player.x = 50;
         this.player.y = this.canvas.height / 2;
         this.player.dx = 0;
@@ -541,13 +542,20 @@ class Game {
             speedBoost: 0,
             shield: 0
         };
+        document.querySelector('.game-container').classList.remove('game-active');
         this.setupLevel();
     }
 
     loadHighScores() {
         try {
-            const scores = localStorage.getItem('highScores');
-            return scores ? JSON.parse(scores) : [];
+            const scores = localStorage.getItem('raceToLifeHighScores');
+            if (scores) {
+                return JSON.parse(scores);
+            }
+            // Initialize with empty array and save it
+            const initialScores = [];
+            localStorage.setItem('raceToLifeHighScores', JSON.stringify(initialScores));
+            return initialScores;
         } catch (error) {
             console.error('Error loading high scores:', error);
             return [];
@@ -556,38 +564,44 @@ class Game {
 
     saveHighScores() {
         try {
-            localStorage.setItem('highScores', JSON.stringify(this.highScores));
+            localStorage.setItem('raceToLifeHighScores', JSON.stringify(this.highScores));
+            // Also save to a backup key in case of corruption
+            localStorage.setItem('raceToLifeHighScores_backup', JSON.stringify(this.highScores));
         } catch (error) {
             console.error('Error saving high scores:', error);
+            // Try to recover from backup if main storage fails
+            try {
+                const backup = localStorage.getItem('raceToLifeHighScores_backup');
+                if (backup) {
+                    this.highScores = JSON.parse(backup);
+                    localStorage.setItem('raceToLifeHighScores', backup);
+                }
+            } catch (backupError) {
+                console.error('Error recovering from backup:', backupError);
+            }
         }
     }
 
     updateHighScoreDisplay() {
-        const highestScore = this.highScores.length > 0 ? this.highScores[0].score : 0;
-        this.highScoreDisplay.textContent = highestScore;
-        this.updateScoreList();
-    }
-
-    updateScoreList() {
-        this.scoreList.innerHTML = '';
-        this.highScores.slice(0, 5).forEach((entry, index) => {
-            const scoreEntry = document.createElement('div');
-            scoreEntry.className = 'score-entry';
-            scoreEntry.innerHTML = `
-                <span>${index + 1}. ${entry.name}</span>
-                <span>${entry.score}</span>
-            `;
-            this.scoreList.appendChild(scoreEntry);
-        });
+        try {
+            const highScore = this.highScores.length > 0 ? Math.max(...this.highScores) : 0;
+            this.highScoreDisplay.textContent = highScore;
+        } catch (error) {
+            console.error('Error updating high score display:', error);
+            this.highScoreDisplay.textContent = '0';
+        }
     }
 
     addScore(score) {
-        const name = prompt('Enter your name for the high score:') || 'Anonymous';
-        this.highScores.push({ name, score });
-        this.highScores.sort((a, b) => b.score - a.score);
-        this.highScores = this.highScores.slice(0, 10); // Keep top 10 scores
-        this.saveHighScores();
-        this.updateHighScoreDisplay();
+        try {
+            this.highScores.push(score);
+            this.highScores.sort((a, b) => b - a); // Sort in descending order
+            this.highScores = this.highScores.slice(0, 10); // Keep only top 10 scores
+            this.saveHighScores();
+            this.updateHighScoreDisplay();
+        } catch (error) {
+            console.error('Error adding new score:', error);
+        }
     }
 }
 
