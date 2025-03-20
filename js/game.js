@@ -330,11 +330,11 @@ class Game {
                 if (distance < this.player.radius + powerup.radius) {
                     powerup.collected = true;
                     if (powerup.type === 'speed') {
-                        // Add 5 seconds (300 frames at 60fps) to existing duration
-                        this.player.powerups.speedBoost = Math.max(300, this.player.powerups.speedBoost + 300);
+                        // Set to 5 seconds (300 frames at 60fps) instead of stacking
+                        this.player.powerups.speedBoost = 300;
                     } else if (powerup.type === 'shield') {
-                        // Add 5 seconds (300 frames at 60fps) to existing duration
-                        this.player.powerups.shield = Math.max(300, this.player.powerups.shield + 300);
+                        // Set to 5 seconds (300 frames at 60fps) instead of stacking
+                        this.player.powerups.shield = 300;
                     }
                 }
             }
