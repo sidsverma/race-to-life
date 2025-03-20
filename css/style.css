@@ -8,20 +8,22 @@ body {
     background: #1a1a2e;
     color: #fff;
     font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
+    overflow-x: hidden;
+    padding: 20px;
 }
 
 .game-container {
     position: relative;
-    width: 800px;
+    width: 100%;
+    max-width: 800px;
     height: 600px;
     background: #16213e;
     border-radius: 10px;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    margin: 0 auto;
 }
 
 #gameCanvas {
@@ -31,14 +33,19 @@ body {
 }
 
 .hud {
-    position: absolute;
+    position: fixed;
     top: 20px;
-    left: 20px;
-    z-index: 1;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
     display: flex;
     gap: 20px;
     font-size: 18px;
     text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    background: rgba(22, 33, 62, 0.95);
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .menu {
@@ -50,7 +57,10 @@ body {
     padding: 30px;
     border-radius: 10px;
     text-align: center;
-    min-width: 300px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
 .menu h1 {
@@ -126,4 +136,44 @@ body {
 .current-score {
     color: #4CAF50;
     font-weight: bold;
+}
+
+.game-description {
+    margin: 20px 0;
+    padding: 15px;
+    background: rgba(15, 52, 96, 0.8);
+    border-radius: 8px;
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.5;
+    overflow-y: auto;
+    max-height: 200px;
+}
+
+.game-description p {
+    color: #fff;
+    margin: 0;
+}
+
+@media (max-height: 700px) {
+    .game-container {
+        height: calc(100vh - 40px);
+    }
+    
+    .menu {
+        max-height: 70vh;
+    }
+}
+
+@media (max-width: 600px) {
+    .hud {
+        font-size: 16px;
+        gap: 10px;
+        padding: 8px 15px;
+    }
+    
+    .menu {
+        padding: 20px;
+        width: 95%;
+    }
 } 
