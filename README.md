@@ -22,7 +22,7 @@ A fun and challenging game where you guide a cell through obstacles to reach the
 
 ## Play Now
 
-Visit [https://YOUR_USERNAME.github.io/race-to-life](https://YOUR_USERNAME.github.io/race-to-life) to play the game!
+Visit [https://sidsverma.github.io/race-to-life](https://sidsverma.github.io/race-to-life) to play the game!
 
 ## Development
 
