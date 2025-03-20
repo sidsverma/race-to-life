@@ -2,9 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="description" content="Race to Life - A fun and challenging game where you guide a cell through obstacles to reach the goal!">
     <title>Race to Life</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Prevent text selection */
+        * {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        /* Allow text selection in instructions */
+        .instructions {
+            -webkit-user-select: text;
+            user-select: text;
+        }
+    </style>
 </head>
 <body>
     <div class="game-container">

@@ -76,12 +76,54 @@ class Game {
             window.addEventListener('keydown', (e) => this.handleKeyDown(e));
             window.addEventListener('keyup', (e) => this.handleKeyUp(e));
 
+            // Add touch controls for mobile
+            this.setupTouchControls();
+
             // Initial setup
             this.setupLevel();
+
+            // Show loading complete
+            console.log('Game initialized successfully');
         } catch (error) {
             console.error('Error initializing game:', error);
             alert('Error initializing game. Please check the console for details.');
         }
+    }
+
+    setupTouchControls() {
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        this.canvas.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+            e.preventDefault(); // Prevent scrolling
+        }, { passive: false });
+
+        this.canvas.addEventListener('touchmove', (e) => {
+            if (!this.isRunning) return;
+            
+            const touchX = e.touches[0].clientX;
+            const touchY = e.touches[0].clientY;
+            
+            const dx = touchX - touchStartX;
+            const dy = touchY - touchStartY;
+            
+            // Update player movement based on touch
+            this.player.dx = Math.sign(dx) * this.player.speed;
+            this.player.dy = Math.sign(dy) * this.player.speed;
+            
+            touchStartX = touchX;
+            touchStartY = touchY;
+            
+            e.preventDefault(); // Prevent scrolling
+        }, { passive: false });
+
+        this.canvas.addEventListener('touchend', (e) => {
+            this.player.dx = 0;
+            this.player.dy = 0;
+            e.preventDefault(); // Prevent scrolling
+        }, { passive: false });
     }
 
     startGame() {
@@ -503,12 +545,21 @@ class Game {
     }
 
     loadHighScores() {
-        const scores = localStorage.getItem('highScores');
-        return scores ? JSON.parse(scores) : [];
+        try {
+            const scores = localStorage.getItem('highScores');
+            return scores ? JSON.parse(scores) : [];
+        } catch (error) {
+            console.error('Error loading high scores:', error);
+            return [];
+        }
     }
 
     saveHighScores() {
-        localStorage.setItem('highScores', JSON.stringify(this.highScores));
+        try {
+            localStorage.setItem('highScores', JSON.stringify(this.highScores));
+        } catch (error) {
+            console.error('Error saving high scores:', error);
+        }
     }
 
     updateHighScoreDisplay() {
