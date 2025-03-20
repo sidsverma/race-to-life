@@ -547,7 +547,17 @@ class Game {
     loadHighScores() {
         try {
             const scores = localStorage.getItem('highScores');
-            return scores ? JSON.parse(scores) : [];
+            if (!scores) {
+                console.log('No high scores found in localStorage');
+                return [];
+            }
+            const parsedScores = JSON.parse(scores);
+            if (!Array.isArray(parsedScores)) {
+                console.error('Invalid high scores format in localStorage');
+                return [];
+            }
+            console.log('Loaded high scores:', parsedScores);
+            return parsedScores;
         } catch (error) {
             console.error('Error loading high scores:', error);
             return [];
@@ -556,7 +566,12 @@ class Game {
 
     saveHighScores() {
         try {
+            if (!Array.isArray(this.highScores)) {
+                console.error('Invalid high scores array');
+                return;
+            }
             localStorage.setItem('highScores', JSON.stringify(this.highScores));
+            console.log('Saved high scores:', this.highScores);
         } catch (error) {
             console.error('Error saving high scores:', error);
         }
@@ -582,12 +597,21 @@ class Game {
     }
 
     addScore(score) {
-        const name = prompt('Enter your name for the high score:') || 'Anonymous';
-        this.highScores.push({ name, score });
-        this.highScores.sort((a, b) => b.score - a.score);
-        this.highScores = this.highScores.slice(0, 10); // Keep top 10 scores
-        this.saveHighScores();
-        this.updateHighScoreDisplay();
+        try {
+            const name = prompt('Enter your name for the high score:') || 'Anonymous';
+            if (typeof score !== 'number' || isNaN(score)) {
+                console.error('Invalid score value:', score);
+                return;
+            }
+            this.highScores.push({ name, score });
+            this.highScores.sort((a, b) => b.score - a.score);
+            this.highScores = this.highScores.slice(0, 10); // Keep top 10 scores
+            this.saveHighScores();
+            this.updateHighScoreDisplay();
+            console.log('Added new score:', { name, score });
+        } catch (error) {
+            console.error('Error adding score:', error);
+        }
     }
 }
 
