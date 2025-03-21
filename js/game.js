@@ -359,7 +359,8 @@ class Game {
         const dy = this.player.y - this.goal.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
         
-        if (distance < this.player.radius + this.goal.radius) {
+        if (distance < this.player.radius + this.goal.radius && !this.goal.reached) {
+            this.goal.reached = true;  // Mark the goal as reached
             this.levelComplete();
         }
     }
@@ -508,15 +509,13 @@ class Game {
     }
 
     levelComplete() {
-        if (!this.goal.reached) {  // Only complete level if no one else reached the goal
-            this.level++;
-            this.levelDisplay.textContent = this.level;
-            this.energy = Math.min(100, this.energy + 50);
-            this.player.x = 50;
-            this.player.y = this.canvas.height / 2;
-            this.goal.reached = false;  // Reset goal state
-            this.setupLevel();
-        }
+        this.level++;
+        this.levelDisplay.textContent = this.level;
+        this.energy = Math.min(100, this.energy + 50);
+        this.player.x = 50;
+        this.player.y = this.canvas.height / 2;
+        this.goal.reached = false;  // Reset goal state
+        this.setupLevel();
     }
 
     loseGame(reason) {
